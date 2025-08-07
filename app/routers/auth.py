@@ -6,11 +6,11 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from app.deps import get_athena_client
 from app.models import LoginRequest, LoginResponse ,UserDetails
 
-router = APIRouter(prefix="/login", tags=["Auth"])
+router = APIRouter()
 
 
 # app/routers/auth.py
-@router.post("/", response_model=UserDetails)
+@router.post("/login", response_model=UserDetails)
 def login(credentials: LoginRequest, athena=Depends(get_athena_client)):
     sql = f"""
         SELECT
