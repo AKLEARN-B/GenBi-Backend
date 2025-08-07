@@ -23,7 +23,7 @@ def login(credentials: LoginRequest, athena=Depends(get_athena_client)):
             "Email",
             "Region"
         FROM role
-        WHERE "AwsUserName" = '{credentials.username}'
+        WHERE "user" = '{credentials.username}'
           AND "user_password" = '{credentials.password}'
         LIMIT 1
     """
