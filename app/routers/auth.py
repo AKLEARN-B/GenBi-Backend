@@ -4,17 +4,26 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.deps import get_athena_client
-from app.models import LoginRequest, LoginResponse
+from app.models import LoginRequest, LoginResponse ,UserDetails
 
 router = APIRouter(prefix="/login", tags=["Auth"])
 
 
-@router.post("/", response_model=LoginResponse)
+# app/routers/auth.py
+@router.post("/", response_model=UserDetails)
 def login(credentials: LoginRequest, athena=Depends(get_athena_client)):
     sql = f"""
-        SELECT "UserId", "Role"
+        SELECT
+            "UserId",
+            "AwsUserName",
+            "User",
+            "UserARN",
+            "DashboardId",
+            "Role",
+            "Email",
+            "Region"
         FROM role
-        WHERE "Aws User Name" = '{credentials.username}'
+        WHERE "AwsUserName" = '{credentials.username}'
           AND "user_password" = '{credentials.password}'
         LIMIT 1
     """
@@ -24,4 +33,15 @@ def login(credentials: LoginRequest, athena=Depends(get_athena_client)):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid credentials",
         )
-    return {"user_id": rows[0]["UserId"], "role": rows[0]["Role"]}
+    # Rename keys from DB to python-friendly field names
+    record = rows[0]
+    return {
+        "user_id":      record["UserId"],
+        "aws_user_name":record["AwsUserName"],
+        "user":         record["User"],
+        "user_arn":     record["UserARN"],
+        "dashboard_id": record["DashboardId"],
+        "role":         record["Role"],
+        "email":        record["Email"],
+        "region":       record["Region"],
+    }

@@ -3,7 +3,7 @@
 # ─────────────────────────────────────────────
 from typing import Optional, List
 
-from pydantic import BaseModel
+from pydantic import BaseModel,Extra
 
 # ---------- Core domain ----------
 
@@ -13,6 +13,13 @@ class Advisor(BaseModel):
     first_name: str
     last_name: str
     email: Optional[str]
+
+class AdvisorDetail(BaseModel, extra=Extra.allow):
+    """
+    Accepts every column Athena returns for one advisor.
+    Nothing is hard-coded, so new columns are picked up automatically.
+    """
+    pass    
 
 
 class Client(BaseModel):
@@ -65,3 +72,13 @@ class LoginRequest(BaseModel):
 class LoginResponse(BaseModel):
     user_id: str
     role: str
+
+class UserDetails(BaseModel):
+    user_id: str
+    aws_user_name: str
+    user: str
+    user_arn: str
+    dashboard_id: str
+    role: str
+    email: str
+    region: str    
