@@ -78,7 +78,6 @@ def recommend_for_client_via_kb(
     prompt = _build_prompt(client_id, client_name, holdings, top_n)
 
     resp = bedrock.retrieve_and_generate(
-        sessionId=f"reco-{client_id}",
         input={"text": prompt},
         retrieveAndGenerateConfiguration={
             "type": "KNOWLEDGE_BASE",
