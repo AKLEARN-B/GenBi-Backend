@@ -3,7 +3,7 @@
 # ─────────────────────────────────────────────
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from . import recommendations
+from app.routers import kb
 
 from app.routers import (
     auth,
@@ -41,4 +41,4 @@ app.include_router(portfolios.router)
 app.include_router(transactions.router)
 app.include_router(content.router)
 app.include_router(quicksight_embed.router)
-app.include_router(recommendations.router)
+app.include_router(kb.router)

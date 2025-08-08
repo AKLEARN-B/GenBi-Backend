@@ -82,17 +82,3 @@ class UserDetails(BaseModel):
     role: str
     email: str
     region: str    
-
-
-class KBRecommendation(BaseModel):
-    product_id: Optional[str] = None
-    product_name: Optional[str] = None
-    product_type: Optional[str] = None
-    asset_class: Optional[str] = None
-    risk_description: Optional[str] = None
-    reason: Optional[str] = None
-
-class KBRecommendationsResponse(BaseModel):
-    client_id: str
-    client_name: Optional[str] = None
-    recommendations: List[KBRecommendation]
