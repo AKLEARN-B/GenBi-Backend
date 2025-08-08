@@ -11,6 +11,7 @@ from app.routers import (
     portfolios,
     transactions,
     content,
+    quicksight_embed,
 )
 
 app = FastAPI(
@@ -38,3 +39,4 @@ app.include_router(clients.router)
 app.include_router(portfolios.router)
 app.include_router(transactions.router)
 app.include_router(content.router)
+app.include_router(quicksight_embed.router)
