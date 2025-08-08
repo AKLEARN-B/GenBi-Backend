@@ -92,11 +92,6 @@ def generate_dashboard_embed_url(req: DashboardEmbedRequest, request: Request):
             ExperienceConfiguration={"Dashboard": {"InitialDashboardId": req.dashboardid}},
             SessionLifetimeInMinutes=600,
 
-            AllowedDomains=[
-            "http://localhost:4200",
-            "http://54.234.194.203"
-           ]
-           
         )
         logger.info("Embed URL generated | expiresAt=%s", resp.get("Expiration"))
         return {"embedUrl": resp["EmbedUrl"], "expiresAt": resp.get("Expiration")}
